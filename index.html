@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>jacopast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Day: 종이 톤 — 순백 대신 따뜻한 회백 */
+  :root {
+    --bg: #ecebe6;
+    --fg: #33322f;
+    --muted: #8a8882;
+    --line: #b4b1a9;
+  }
+  /* Night: 숯 톤 — 검정 대신 밝은 차콜 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #2c2d30;
+      --fg: #d9d7d1;
+      --muted: #8e8d89;
+      --line: #57585d;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.5 "Gowun Batang", "AppleMyungjo", serif;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;      /* 한글: 어절 단위로만 줄바꿈 */
+    overflow-wrap: break-word; /* 너무 긴 단어는 예외적으로 끊음 */
+    text-wrap: pretty;         /* 마지막 줄에 한 단어만 남는 것 방지 */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  main { width: 100%; max-width: 480px; padding: 18vh 24px 64px; }
+  h1 { font-size: 15px; font-weight: 700; letter-spacing: .02em; margin-bottom: 40px; }
+  h1, h2 { text-wrap: balance; } /* 제목이 여러 줄이 되면 줄 길이를 고르게 */
+  section + section { margin-top: 40px; }
+  h2 { font-size: 13px; font-weight: 400; color: var(--muted); padding-bottom: 8px; border-bottom: 2px solid var(--line); margin-bottom: 4px; }
+  .row.group { justify-content: flex-start; }
+  .item { white-space: nowrap; }
+  .cat { flex: 0 0 72px; font-size: 13px; color: var(--muted); }
+  ul { list-style: none; }
+  .row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding: 10px 0;
+    color: inherit; text-decoration: none;
+  }
+  .title { font-size: 15px; }
+  .desc { font-size: 13px; color: var(--muted); text-align: right; }
+  a:hover .title, a:focus-visible .title { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible { outline: none; }
+  .error { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>jacopast</h1>
+  <div id="links"></div>
+</main>
+<script>
+  function renderList(links) {
+    const list = document.createElement('ul');
+    for (const { title, url, description } of links) {
+      const a = document.createElement(url ? 'a' : 'div');
+      a.className = 'row';
+      if (url) a.href = url;
+      const t = document.createElement('span');
+      t.className = 'title';
+      t.textContent = title;
+      a.append(t);
+      if (description) {
+        const d = document.createElement('span');
+        d.className = 'desc';
+        d.textContent = description;
+        a.append(d);
+      }
+      const li = document.createElement('li');
+      li.append(a);
+      list.append(li);
+    }
+    return list;
+  }
+
+  // 그룹 하나 = 한 줄: "카테고리  프로젝트, 프로젝트"
+  function renderGroups(groups) {
+    const list = document.createElement('ul');
+    for (const group of groups) {
+      const row = document.createElement('div');
+      row.className = 'row group';
+      const d = document.createElement('span');
+      d.className = 'cat';
+      d.textContent = group.name;
+      const t = document.createElement('span');
+      t.className = 'title';
+      group.links.forEach(({ title }, i) => {
+        const item = document.createElement('span');
+        item.className = 'item';
+        item.textContent = i < group.links.length - 1 ? title + ',' : title;
+        t.append(item, ' ');
+      });
+      row.append(d, t);
+      const li = document.createElement('li');
+      li.append(row);
+      list.append(li);
+    }
+    return list;
+  }
+
+  fetch('links.json', { cache: 'no-cache' })
+    .then(r => r.json())
+    .then(({ sections }) => {
+      const root = document.getElementById('links');
+      for (const { name, links, groups } of sections) {
+        const section = document.createElement('section');
+        if (name) {
+          const h = document.createElement('h2');
+          h.textContent = name;
+          section.append(h);
+        }
+        if (links) section.append(renderList(links));
+        if (groups) section.append(renderGroups(groups));
+        root.append(section);
+      }
+    })
+    .catch(() => {
+      document.getElementById('links').outerHTML = '<p class="error">링크를 불러오지 못했어요.</p>';
+    });
+</script>
+</body>
+</html>

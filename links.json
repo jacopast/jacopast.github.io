@@ -1,0 +1,96 @@
+{
+  "sections": [
+    {
+      "links": [
+        {
+          "title": "jacopast.com",
+          "url": "https://jacopast.com",
+          "description": "블로그"
+        },
+        {
+          "title": "enwd.net",
+          "url": "https://enwd.net",
+          "description": "엘뉴원독"
+        }
+      ]
+    },
+    {
+      "name": "Personal",
+      "links": [
+        {
+          "title": "K-Drama TV Guide",
+          "url": "https://jacopast.github.io/kdrama-tv-guide/kdrama_tv_guide.html",
+          "description": "K-드라마 방영 가이드"
+        },
+        {
+          "title": "YouTube News Analysis",
+          "url": "https://jacopast.github.io/youtube-news-analysis/",
+          "description": "시사 채널 의제 분석"
+        }
+      ]
+    },
+    {
+      "name": "Work",
+      "links": [
+        {
+          "title": "Image Studio",
+          "url": "https://image-studio-core.vercel.app",
+          "description": "이미지 작업실"
+        }
+      ]
+    },
+    {
+      "name": "Draft",
+      "groups": [
+        {
+          "name": "ENWD",
+          "links": [
+            {
+              "title": "4-059"
+            },
+            {
+              "title": "로버트 모지스 도시독해"
+            },
+            {
+              "title": "Gasket Script Note"
+            }
+          ]
+        },
+        {
+          "name": "Personal",
+          "links": [
+            {
+              "title": "Leonia 카드뉴스"
+            },
+            {
+              "title": "잘살아보세"
+            },
+            {
+              "title": "Project Adam II"
+            },
+            {
+              "title": "동해수산"
+            },
+            {
+              "title": "jacopast.github.io"
+            },
+            {
+              "title": "Sol Read"
+            }
+          ]
+        },
+        {
+          "name": "Work",
+          "links": [
+            {
+              "title": "GIS to Rhino"
+            },
+            {
+              "title": "Rhino Parking"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
