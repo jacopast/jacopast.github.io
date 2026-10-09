@@ -43,6 +43,15 @@
   h1, h2 { text-wrap: balance; } /* 제목이 여러 줄이 되면 줄 길이를 고르게 */
   section + section { margin-top: 40px; }
   h2 { font-size: 13px; font-weight: 400; color: var(--muted); padding-bottom: 8px; border-bottom: 2px solid var(--line); margin-bottom: 4px; }
+  /* 카테고리 마커: 정렬선 왼쪽 바깥에 걸림 — 본문 위치는 그대로 */
+  h2 { position: relative; }
+  h2::before {
+    content: ""; position: absolute;
+    left: -15px; top: calc(19.5px / 2 - 3.5px);
+    width: 7px; height: 7px; background: var(--muted);
+  }
+  h2[data-name="Personal"]::before { border-radius: 50%; }
+  h2[data-name="Draft"]::before { transform: rotate(45deg) scale(.9); background: none; border: 1.5px solid var(--muted); }
   .row.group { justify-content: flex-start; }
   .item { white-space: nowrap; }
   .cat { flex: 0 0 72px; font-size: 13px; color: var(--muted); }
@@ -122,6 +131,7 @@
         if (name) {
           const h = document.createElement('h2');
           h.textContent = name;
+          h.dataset.name = name;
           section.append(h);
         }
         if (links) section.append(renderList(links));
