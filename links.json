@@ -26,6 +26,11 @@
           "title": "YouTube News Analysis",
           "url": "https://jacopast.github.io/youtube-news-analysis/",
           "description": "시사 채널 의제 분석"
+        },
+        {
+          "title": "결",
+          "url": "https://jacopast.github.io/gyeol/",
+          "description": "공공공간 배치·결 비교 지도"
         }
       ]
     },
